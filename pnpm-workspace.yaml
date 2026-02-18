@@ -1,0 +1,8 @@
+packages:
+  - packages/server
+  - packages/web
+  - packages/command
+
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
