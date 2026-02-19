@@ -6,8 +6,8 @@ import { createServer } from 'server/sources/server.ts';
 const program = new Command();
 
 program
-  .name('image-gallery-server')
-  .description('Image gallery server — browse images in a directory')
+  .name('media-gallery-server')
+  .description('Media gallery server — browse images and videos in a directory')
   .version('0.0.1')
   .argument('[path]', 'directory to serve', '.')
   .option('-p, --port <number>', 'listen port', '8080')
@@ -16,7 +16,7 @@ program
   .option('--cors', 'enable CORS')
   .option('-o, --open', 'open browser on start')
   .option('-s, --silent', 'suppress log output')
-  .option('--title <string>', 'page title', 'Image Gallery')
+  .option('--title <string>', 'page title', 'Media Gallery')
   .action(async (targetPath: string, flags: Record<string, string | boolean | undefined>) => {
     const root = path.resolve(targetPath);
 
@@ -36,7 +36,7 @@ program
     const url = `http://${address}:${options.port}`;
 
     if (!options.silent) {
-      console.log(`\n  Image Gallery Server\n`);
+      console.log(`\n  Media Gallery Server\n`);
       console.log(`  Local:   ${url}`);
       console.log(`  Serving: ${options.root}\n`);
     }

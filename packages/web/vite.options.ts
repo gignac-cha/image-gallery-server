@@ -13,6 +13,7 @@ export default defineConfig({
       '/api': 'http://localhost:8080',
       '/_thumbnails': 'http://localhost:8080',
       '/images': 'http://localhost:8080',
+      '/media': 'http://localhost:8080',
     },
   },
 });
