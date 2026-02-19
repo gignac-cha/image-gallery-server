@@ -6,9 +6,10 @@ interface HeaderProps {
   totalVideos: number;
   layout: LayoutTheme;
   onLayoutChange: (layout: LayoutTheme) => void;
+  onSettingsClick: () => void;
 }
 
-export function Header({ title, totalImages, totalVideos, layout, onLayoutChange }: HeaderProps) {
+export function Header({ title, totalImages, totalVideos, layout, onLayoutChange, onSettingsClick }: HeaderProps) {
   const parts: string[] = [];
   if (totalImages > 0) parts.push(`${totalImages} images`);
   if (totalVideos > 0) parts.push(`${totalVideos} videos`);
@@ -20,20 +21,29 @@ export function Header({ title, totalImages, totalVideos, layout, onLayoutChange
         <h1 className="header__title">{title}</h1>
         <span className="header__count">{countText}</span>
       </div>
-      <div className="header__theme-selector">
+      <div className="header__right">
+        <div className="header__theme-selector">
+          <button
+            className={`header__theme-button${layout === 'grid' ? ' header__theme-button--active' : ''}`}
+            onClick={() => onLayoutChange('grid')}
+            title="Grid"
+          >
+            {'\u2588\u2588\u2588'}
+          </button>
+          <button
+            className={`header__theme-button${layout === 'collage' ? ' header__theme-button--active' : ''}`}
+            onClick={() => onLayoutChange('collage')}
+            title="Collage"
+          >
+            {'\u2587\u2585\u2586'}
+          </button>
+        </div>
         <button
-          className={`header__theme-button${layout === 'grid' ? ' header__theme-button--active' : ''}`}
-          onClick={() => onLayoutChange('grid')}
-          title="Grid"
+          className="header__settings-button"
+          onClick={onSettingsClick}
+          title="Settings"
         >
-          {'\u2588\u2588\u2588'}
-        </button>
-        <button
-          className={`header__theme-button${layout === 'collage' ? ' header__theme-button--active' : ''}`}
-          onClick={() => onLayoutChange('collage')}
-          title="Collage"
-        >
-          {'\u2587\u2585\u2586'}
+          {'\u2699'}
         </button>
       </div>
     </header>

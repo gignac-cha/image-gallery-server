@@ -4,8 +4,12 @@ import { Header } from './components/Header.tsx';
 import type { LayoutTheme } from './components/Header.tsx';
 import { Grid } from './components/Gallery/Grid.tsx';
 import { Lightbox } from './components/Gallery/Lightbox.tsx';
+import { SettingsDialog } from './components/SettingsDialog.tsx';
 
 const VIEW_PREFIX = '#/view/';
+const LS_LAYOUT = 'gallery:layout';
+const LS_GRID_UNIT = 'gallery:gridUnit';
+const DEFAULT_GRID_UNIT = 32;
 
 function getHashPath(): string | null {
   const hash = location.hash;
@@ -15,17 +19,43 @@ function getHashPath(): string | null {
   return null;
 }
 
+function loadLayout(): LayoutTheme {
+  const stored = localStorage.getItem(LS_LAYOUT);
+  return stored === 'collage' ? 'collage' : 'grid';
+}
+
+function loadGridUnit(): number {
+  const stored = localStorage.getItem(LS_GRID_UNIT);
+  if (stored) {
+    const value = Number(stored);
+    if (value >= 8 && value <= 128) return value;
+  }
+  return DEFAULT_GRID_UNIT;
+}
+
 export function Application() {
   const [data, setData] = useState<GalleryData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [layout, setLayout] = useState<LayoutTheme>('grid');
+  const [layout, setLayout] = useState<LayoutTheme>(loadLayout);
+  const [gridUnit, setGridUnit] = useState<number>(loadGridUnit);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/media')
       .then((response) => response.json())
       .then((json: GalleryData) => setData(json))
       .catch((err) => setError(err.message));
+  }, []);
+
+  const handleLayoutChange = useCallback((value: LayoutTheme) => {
+    setLayout(value);
+    localStorage.setItem(LS_LAYOUT, value);
+  }, []);
+
+  const handleGridUnitChange = useCallback((value: number) => {
+    setGridUnit(value);
+    localStorage.setItem(LS_GRID_UNIT, String(value));
   }, []);
 
   // On data load, restore lightbox from URL hash
@@ -36,7 +66,6 @@ export function Application() {
       const index = data.media.findIndex((m) => m.relativePath === path);
       if (index >= 0) {
         setLightboxIndex(index);
-        // Ensure a base entry exists so back button works
         const currentHash = location.hash;
         history.replaceState(null, '', location.pathname);
         history.pushState({ lightbox: true }, '', currentHash);
@@ -93,11 +122,13 @@ export function Application() {
         totalImages={data.totalImages}
         totalVideos={data.totalVideos}
         layout={layout}
-        onLayoutChange={setLayout}
+        onLayoutChange={handleLayoutChange}
+        onSettingsClick={() => setSettingsOpen(true)}
       />
       <Grid
         media={data.media}
         layout={layout}
+        gridUnit={gridUnit}
         onMediaClick={openLightbox}
       />
       {lightboxIndex !== null && (
@@ -106,6 +137,13 @@ export function Application() {
           currentIndex={lightboxIndex}
           onClose={closeLightbox}
           onNavigate={navigateLightbox}
+        />
+      )}
+      {settingsOpen && (
+        <SettingsDialog
+          gridUnit={gridUnit}
+          onGridUnitChange={handleGridUnitChange}
+          onClose={() => setSettingsOpen(false)}
         />
       )}
     </div>

@@ -7,10 +7,11 @@ import { computeCollageLayout } from './collage.ts';
 interface GridProps {
   media: MediaFile[];
   layout: LayoutTheme;
+  gridUnit: number;
   onMediaClick: (index: number) => void;
 }
 
-export function Grid({ media, layout, onMediaClick }: GridProps) {
+export function Grid({ media, layout, gridUnit, onMediaClick }: GridProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -28,8 +29,8 @@ export function Grid({ media, layout, onMediaClick }: GridProps) {
 
   const collageLayout = useMemo(() => {
     if (layout !== 'collage' || containerWidth <= 0) return null;
-    return computeCollageLayout(media, containerWidth);
-  }, [layout, containerWidth, media]);
+    return computeCollageLayout(media, containerWidth, gridUnit);
+  }, [layout, containerWidth, media, gridUnit]);
 
   return (
     <main

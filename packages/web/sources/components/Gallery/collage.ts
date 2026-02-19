@@ -1,6 +1,5 @@
 import type { MediaFile } from '../../types.ts';
 
-const GRID_UNIT = 16;
 const BASE_ROW_HEIGHT = 240;
 
 export interface TileLayout {
@@ -22,14 +21,12 @@ function aspectRatio(item: MediaFile): number {
   return w / h;
 }
 
-function normalize(value: number): number {
-  return Math.round(value / GRID_UNIT) * GRID_UNIT;
-}
-
 export function computeCollageLayout(
   media: MediaFile[],
   containerWidth: number,
+  gridUnit: number = 32,
 ): CollageLayout {
+  const normalize = (value: number) => Math.round(value / gridUnit) * gridUnit;
   if (media.length === 0) return { tiles: [], totalHeight: 0 };
 
   const tiles: TileLayout[] = [];
