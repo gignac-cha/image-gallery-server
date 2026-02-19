@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GalleryData } from './types.ts';
 import { Header } from './components/Header.tsx';
+import type { LayoutTheme } from './components/Header.tsx';
 import { Grid } from './components/Gallery/Grid.tsx';
 import { Lightbox } from './components/Gallery/Lightbox.tsx';
 
@@ -8,6 +9,7 @@ export function Application() {
   const [data, setData] = useState<GalleryData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [layout, setLayout] = useState<LayoutTheme>('grid');
 
   useEffect(() => {
     fetch('/api/media')
@@ -30,9 +32,12 @@ export function Application() {
         title={data.options.title}
         totalImages={data.totalImages}
         totalVideos={data.totalVideos}
+        layout={layout}
+        onLayoutChange={setLayout}
       />
       <Grid
         media={data.media}
+        layout={layout}
         onMediaClick={(index) => setLightboxIndex(index)}
       />
       {lightboxIndex !== null && (
