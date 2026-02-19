@@ -34,7 +34,8 @@ export async function registerPreviewRoutes(fastify: FastifyInstance, options: S
       setCacheHeaders(reply, options.cache);
       reply.header('Content-Type', 'video/mp4');
       return reply.send(fs.createReadStream(previewPath));
-    } catch {
+    } catch (error) {
+      request.log.error({ error, requestPath }, 'Preview generation failed');
       return reply.status(500).send({ error: 'Preview generation failed' });
     }
   });

@@ -103,6 +103,22 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* Grid — Collage */
+.grid--collage {
+  position: relative;
+  display: block;
+}
+
+.grid--collage .tile {
+  aspect-ratio: unset;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.grid--collage .tile:hover {
+  z-index: 999 !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+}
+
 /* Tile */
 .tile {
   position: relative;

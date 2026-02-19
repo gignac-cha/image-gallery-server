@@ -4,6 +4,7 @@ import { MediaFile } from '../../types.ts';
 interface TileProps {
   media: MediaFile;
   onClick: () => void;
+  style?: React.CSSProperties;
 }
 
 export function formatSize(bytes: number): string {
@@ -18,7 +19,7 @@ function formatDuration(seconds: number): string {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export function Tile({ media, onClick }: TileProps) {
+export function Tile({ media, onClick, style }: TileProps) {
   const dimensions = media.width && media.height
     ? `${media.width}\u00d7${media.height}`
     : null;
@@ -60,6 +61,7 @@ export function Tile({ media, onClick }: TileProps) {
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      style={style}
     >
       {!thumbLoaded && <div className="tile__loader" />}
       <img
