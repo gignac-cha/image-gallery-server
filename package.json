@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "image-gallery-server": "./packages/command/outputs/command.js"
+  },
   "scripts": {
     "build": "pnpm --filter server build && pnpm --filter command build",
     "build:web": "pnpm --filter web build",
