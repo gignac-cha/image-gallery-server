@@ -3,8 +3,28 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "main": "./exports/cjs/index.cjs",
+  "module": "./exports/esm/index.js",
+  "types": "./exports/types/server.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./exports/types/server.d.ts",
+        "default": "./exports/esm/index.js"
+      },
+      "require": {
+        "types": "./exports/types/server.d.ts",
+        "default": "./exports/cjs/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "exports"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node scripts/build.ts",
+    "verify": "node --test scripts/verify-build.ts",
+    "test": "node --test scripts/verify-build.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +35,8 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.56.0",
     "@typescript-eslint/parser": "^8.56.0",
+    "esbuild": "^0.27.3",
     "eslint": "^10.0.0",
-    "fastify": "^5.7.4",
     "nodemon": "^3.1.11",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -24,6 +44,7 @@
   },
   "dependencies": {
     "@fastify/static": "^9.0.0",
+    "fastify": "^5.7.4",
     "mime-types": "^3.0.2",
     "sharp": "^0.34.5"
   }
