@@ -1,14 +1,14 @@
 import path from 'node:path';
 import { Command } from 'commander';
 import opener from 'opener';
-import { createServer } from 'server/sources/server.ts';
+import { createServer } from 'server';
 
 export function createProgram() {
   const program = new Command();
 
   program
-    .name('media-gallery-server')
-    .description('Media gallery server — browse images and videos in a directory')
+    .name('image-gallery-server')
+    .description('Image Gallery Server — browse images and videos in a directory')
     .version('0.0.1')
     .argument('[path]', 'directory to serve', '.')
     .option('-p, --port <number>', 'listen port', '8080')
@@ -17,9 +17,11 @@ export function createProgram() {
     .option('--cors', 'enable CORS')
     .option('-o, --open', 'open browser on start')
     .option('-s, --silent', 'suppress log output')
-    .option('--title <string>', 'page title', 'Media Gallery')
+    .option('--title <string>', 'page title', 'Image Gallery Server')
     .action(async (targetPath: string, flags: Record<string, string | boolean | undefined>) => {
       const root = path.resolve(targetPath);
+
+      const webOutputPath = path.resolve(import.meta.dirname, '..', '..', 'web', 'outputs');
 
       const { fastify, options } = await createServer({
         root,
@@ -29,6 +31,7 @@ export function createProgram() {
         cors: flags.cors === true,
         title: flags.title as string,
         silent: flags.silent === true,
+        webOutputPath,
       });
 
       await fastify.listen({ port: options.port, host: options.host });
@@ -37,7 +40,7 @@ export function createProgram() {
       const url = `http://${address}:${options.port}`;
 
       if (!options.silent) {
-        console.log(`\n  Media Gallery Server\n`);
+        console.log(`\n  Image Gallery Server\n`);
         console.log(`  Local:   ${url}`);
         console.log(`  Serving: ${options.root}\n`);
       }

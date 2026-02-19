@@ -36,14 +36,13 @@ export async function createServer(userOptions: Partial<ServerOptions> = {}) {
   await registerStaticRoutes(fastify, options);
 
   // Serve web build output (SPA)
-  const webOutputPath = path.resolve(import.meta.dirname, '..', '..', 'web', 'outputs');
   await fastify.register(fastifyStatic, {
-    root: webOutputPath,
+    root: options.webOutputPath,
     prefix: '/',
   });
 
   // SPA fallback: serve index.html for unmatched routes
-  const indexPath = path.join(webOutputPath, 'index.html');
+  const indexPath = path.join(options.webOutputPath, 'index.html');
   fastify.setNotFoundHandler(async (_request, reply) => {
     reply.header('Content-Type', 'text/html');
     return reply.send(fs.createReadStream(indexPath));

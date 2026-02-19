@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "bin": {
+    "image-gallery-server": "./outputs/command.js"
+  },
   "scripts": {
+    "build": "node scripts/build.ts",
     "test": "vitest run"
   },
   "keywords": [],
@@ -16,6 +20,7 @@
   },
   "devDependencies": {
     "@types/opener": "^1.4.3",
+    "esbuild": "^0.27.3",
     "vitest": "^4.0.18"
   }
 }

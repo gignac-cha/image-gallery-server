@@ -23,6 +23,7 @@ export interface ServerOptions {
   mediaExtensions: Set<string>;
   title: string;
   silent: boolean;
+  webOutputPath: string;
 }
 
 export const DEFAULT_OPTIONS: ServerOptions = {
@@ -36,6 +37,7 @@ export const DEFAULT_OPTIONS: ServerOptions = {
   imageExtensions: IMAGE_EXTENSIONS,
   videoExtensions: VIDEO_EXTENSIONS,
   mediaExtensions: MEDIA_EXTENSIONS,
-  title: 'Media Gallery',
+  title: 'Image Gallery Server',
   silent: false,
+  webOutputPath: path.resolve(import.meta.dirname, '..', '..', 'web', 'outputs'),
 };
