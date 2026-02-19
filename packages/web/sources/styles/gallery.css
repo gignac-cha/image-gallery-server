@@ -46,6 +46,28 @@ body {
   padding-bottom: 48px;
 }
 
+.tile__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile__loader::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  border: 2px solid #555;
+  border-top-color: #aaa;
+  border-radius: 50%;
+  animation: tile-spin 0.6s linear infinite;
+}
+
+@keyframes tile-spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Tile */
 .tile {
   position: relative;
@@ -65,6 +87,24 @@ body {
 
 .tile:hover .tile__image {
   transform: scale(1.05);
+}
+
+.tile__image--hidden {
+  opacity: 0;
+}
+
+.tile__preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.tile__preview--visible {
+  opacity: 1;
 }
 
 .tile__overlay {

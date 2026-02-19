@@ -1,3 +1,4 @@
+import { useState, useRef, useCallback } from 'react';
 import { MediaFile } from '../../types.ts';
 
 interface TileProps {
@@ -26,14 +27,60 @@ export function Tile({ media, onClick }: TileProps) {
     ? media.duration
     : null;
 
+  const isVideo = media.type === 'video' && (duration ?? 0) >= 5;
+  const [thumbLoaded, setThumbLoaded] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const [previewReady, setPreviewReady] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleMouseEnter = useCallback(() => {
+    if (!isVideo) return;
+    setHovering(true);
+    setPreviewReady(false);
+  }, [isVideo]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!isVideo) return;
+    setHovering(false);
+    setPreviewReady(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.removeAttribute('src');
+      videoRef.current.load();
+    }
+  }, [isVideo]);
+
+  const handleCanPlay = useCallback(() => {
+    setPreviewReady(true);
+  }, []);
+
   return (
-    <div className="tile" onClick={onClick}>
+    <div
+      className="tile"
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {!thumbLoaded && <div className="tile__loader" />}
       <img
-        className="tile__image"
+        className={`tile__image${hovering && previewReady ? ' tile__image--hidden' : ''}`}
         src={`/_thumbnails/${media.relativePath}`}
         alt={media.name}
         loading="lazy"
+        onLoad={() => setThumbLoaded(true)}
       />
+      {hovering && isVideo && (
+        <video
+          ref={videoRef}
+          className={`tile__preview${previewReady ? ' tile__preview--visible' : ''}`}
+          src={`/_previews/${media.relativePath}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          onCanPlay={handleCanPlay}
+        />
+      )}
       {media.type === 'video' && (
         <div className="tile__play-badge">
           <span className="tile__play-icon">{'\u25B6'}</span>

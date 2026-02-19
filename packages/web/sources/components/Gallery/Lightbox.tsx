@@ -66,6 +66,7 @@ export function Lightbox({ media, currentIndex, onClose, onNavigate }: LightboxP
               src={`/media/${item.relativePath}`}
               controls
               autoPlay
+              loop
               onError={() => setVideoError(true)}
             />
           )

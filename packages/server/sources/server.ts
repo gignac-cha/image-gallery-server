@@ -7,6 +7,7 @@ import { DEFAULT_OPTIONS } from './options.ts';
 import { registerApiRoutes } from './routes/api.ts';
 import { registerThumbnailRoutes } from './routes/thumbnail.ts';
 import { registerStaticRoutes } from './routes/static.ts';
+import { registerPreviewRoutes } from './routes/preview.ts';
 
 export type { ServerOptions } from './options.ts';
 export { DEFAULT_OPTIONS } from './options.ts';
@@ -31,6 +32,9 @@ export async function createServer(userOptions: Partial<ServerOptions> = {}) {
 
   // Thumbnail routes
   await registerThumbnailRoutes(fastify, options);
+
+  // Video preview routes
+  await registerPreviewRoutes(fastify, options);
 
   // Static media file routes (images + videos with Range support)
   await registerStaticRoutes(fastify, options);
