@@ -19,9 +19,12 @@ function getHashPath(): string | null {
   return null;
 }
 
+const VALID_LAYOUTS = new Set<LayoutTheme>(['grid', 'collage', 'masonry', 'justified']);
+
 function loadLayout(): LayoutTheme {
   const stored = localStorage.getItem(LS_LAYOUT);
-  return stored === 'collage' ? 'collage' : 'grid';
+  if (stored && VALID_LAYOUTS.has(stored as LayoutTheme)) return stored as LayoutTheme;
+  return 'grid';
 }
 
 function loadGridUnit(): number {

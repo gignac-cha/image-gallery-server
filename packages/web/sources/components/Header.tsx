@@ -1,4 +1,4 @@
-export type LayoutTheme = 'grid' | 'collage';
+export type LayoutTheme = 'grid' | 'collage' | 'masonry' | 'justified';
 
 interface HeaderProps {
   title: string;
@@ -29,6 +29,20 @@ export function Header({ title, totalImages, totalVideos, layout, onLayoutChange
             title="Grid"
           >
             {'\u2588\u2588\u2588'}
+          </button>
+          <button
+            className={`header__theme-button${layout === 'masonry' ? ' header__theme-button--active' : ''}`}
+            onClick={() => onLayoutChange('masonry')}
+            title="Masonry"
+          >
+            {'\u2587\u2583\u2585'}
+          </button>
+          <button
+            className={`header__theme-button${layout === 'justified' ? ' header__theme-button--active' : ''}`}
+            onClick={() => onLayoutChange('justified')}
+            title="Justified"
+          >
+            {'\u2580\u2580\u2580'}
           </button>
           <button
             className={`header__theme-button${layout === 'collage' ? ' header__theme-button--active' : ''}`}

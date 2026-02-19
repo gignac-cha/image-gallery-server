@@ -129,6 +129,16 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* Grid — Positioned layouts (masonry, justified) */
+.grid--positioned {
+  position: relative;
+  display: block;
+}
+
+.grid--positioned .tile {
+  aspect-ratio: unset;
+}
+
 /* Grid — Collage */
 .grid--collage {
   position: relative;
