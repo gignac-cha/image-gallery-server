@@ -253,4 +253,7 @@ packages/web/outputs/
 packages/server/exports/
 .gallery-cache/
 
+# Turborepo
+.turbo
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,jetbrains+all,node
