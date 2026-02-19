@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "pnpm --filter server build && pnpm --filter command build",
     "build:web": "pnpm --filter web build",
-    "dev": "pnpm build:web && node packages/command/sources/command.ts",
+    "dev": "pnpm build:web && pnpm build && packages/command/outputs/command.js",
+    "start": "packages/command/outputs/command.js",
     "dev:web": "pnpm --filter web dev",
     "test": "vitest run",
     "test:watch": "vitest",
