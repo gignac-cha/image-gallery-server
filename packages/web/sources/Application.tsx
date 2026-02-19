@@ -10,7 +10,7 @@ export function Application() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    fetch('/api/images')
+    fetch('/api/media')
       .then((response) => response.json())
       .then((json: GalleryData) => setData(json))
       .catch((err) => setError(err.message));
@@ -26,14 +26,18 @@ export function Application() {
 
   return (
     <div className="app">
-      <Header title={data.options.title} totalImages={data.totalImages} />
+      <Header
+        title={data.options.title}
+        totalImages={data.totalImages}
+        totalVideos={data.totalVideos}
+      />
       <Grid
-        images={data.images}
-        onImageClick={(index) => setLightboxIndex(index)}
+        media={data.media}
+        onMediaClick={(index) => setLightboxIndex(index)}
       />
       {lightboxIndex !== null && (
         <Lightbox
-          images={data.images}
+          media={data.media}
           currentIndex={lightboxIndex}
           onClose={() => setLightboxIndex(null)}
           onNavigate={(index) => setLightboxIndex(index)}

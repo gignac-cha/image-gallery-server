@@ -1,19 +1,19 @@
-import { ImageFile } from '../../types.ts';
+import { MediaFile } from '../../types.ts';
 import { Tile } from './Tile.tsx';
 
 interface GridProps {
-  images: ImageFile[];
-  onImageClick: (index: number) => void;
+  media: MediaFile[];
+  onMediaClick: (index: number) => void;
 }
 
-export function Grid({ images, onImageClick }: GridProps) {
+export function Grid({ media, onMediaClick }: GridProps) {
   return (
     <main className="grid">
-      {images.map((image, index) => (
+      {media.map((item, index) => (
         <Tile
-          key={image.relativePath}
-          image={image}
-          onClick={() => onImageClick(index)}
+          key={item.relativePath}
+          media={item}
+          onClick={() => onMediaClick(index)}
         />
       ))}
     </main>

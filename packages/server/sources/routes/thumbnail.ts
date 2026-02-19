@@ -5,6 +5,7 @@ import { resolveSafePath } from '../tools/security.ts';
 import { getThumbnail } from '../thumbnails.ts';
 import { setCacheHeaders } from '../tools/cache.ts';
 import type { ServerOptions } from '../options.ts';
+import type { MediaType } from '../scanner.ts';
 
 export async function registerThumbnailRoutes(fastify: FastifyInstance, options: ServerOptions): Promise<void> {
   const cacheDirectory = path.join(options.root, '.gallery-cache', 'thumbnails');
@@ -17,12 +18,15 @@ export async function registerThumbnailRoutes(fastify: FastifyInstance, options:
       return reply.status(403).send({ error: 'Forbidden' });
     }
 
+    const extension = path.extname(requestPath).toLowerCase();
+    const mediaType: MediaType = options.videoExtensions.has(extension) ? 'video' : 'image';
+
     try {
       const thumbnailPath = await getThumbnail(absolutePath, requestPath, {
         width: options.thumbnailWidth,
         quality: options.thumbnailQuality,
         cacheDirectory,
-      });
+      }, mediaType);
 
       setCacheHeaders(reply, options.cache);
       reply.header('Content-Type', 'image/jpeg');

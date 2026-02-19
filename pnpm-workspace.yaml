@@ -6,3 +6,5 @@ packages:
 onlyBuiltDependencies:
   - esbuild
   - sharp
+  - '@ffmpeg-installer/linux-x64'
+  - '@ffprobe-installer/linux-x64'

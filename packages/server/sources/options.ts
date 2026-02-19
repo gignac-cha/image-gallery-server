@@ -4,6 +4,12 @@ const IMAGE_EXTENSIONS = new Set([
   '.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.avif', '.tiff', '.svg',
 ]);
 
+const VIDEO_EXTENSIONS = new Set([
+  '.mp4', '.webm', '.ogv', '.mov', '.mkv', '.avi', '.wmv',
+]);
+
+const MEDIA_EXTENSIONS = new Set([...IMAGE_EXTENSIONS, ...VIDEO_EXTENSIONS]);
+
 export interface ServerOptions {
   root: string;
   port: number;
@@ -13,6 +19,8 @@ export interface ServerOptions {
   thumbnailWidth: number;
   thumbnailQuality: number;
   imageExtensions: Set<string>;
+  videoExtensions: Set<string>;
+  mediaExtensions: Set<string>;
   title: string;
   silent: boolean;
 }
@@ -26,6 +34,8 @@ export const DEFAULT_OPTIONS: ServerOptions = {
   thumbnailWidth: 400,
   thumbnailQuality: 80,
   imageExtensions: IMAGE_EXTENSIONS,
-  title: 'Image Gallery',
+  videoExtensions: VIDEO_EXTENSIONS,
+  mediaExtensions: MEDIA_EXTENSIONS,
+  title: 'Media Gallery',
   silent: false,
 };

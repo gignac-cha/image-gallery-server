@@ -32,7 +32,7 @@ export async function createServer(userOptions: Partial<ServerOptions> = {}) {
   // Thumbnail routes
   await registerThumbnailRoutes(fastify, options);
 
-  // Original image routes
+  // Static media file routes (images + videos with Range support)
   await registerStaticRoutes(fastify, options);
 
   // Serve web build output (SPA)
