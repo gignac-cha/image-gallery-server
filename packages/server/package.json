@@ -24,7 +24,7 @@
   "scripts": {
     "build": "node scripts/build.ts",
     "verify": "node --test scripts/verify-build.ts",
-    "test": "node --test scripts/verify-build.ts"
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -40,7 +40,8 @@
     "nodemon": "^3.1.11",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "vitest": "^4.0.18"
   },
   "dependencies": {
     "@fastify/static": "^9.0.0",

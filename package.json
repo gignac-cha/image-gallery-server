@@ -7,7 +7,10 @@
     "build:web": "pnpm --filter web build",
     "dev": "pnpm build:web && node packages/command/sources/command.ts",
     "dev:web": "pnpm --filter web dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +18,10 @@
   "packageManager": "pnpm@10.30.0",
   "devDependencies": {
     "@types/node": "^25.2.3",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.0.0",
     "prettier": "^3.8.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   }
 }
